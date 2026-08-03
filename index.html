@@ -353,6 +353,12 @@ body.full::before,body.full::after{display:none}
 .dnote{margin-top:9px;font-size:9.5px;color:var(--ink3);text-align:center}
 .navico{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-shadow:0 2px 6px rgba(150,120,60,.2);background:linear-gradient(135deg,var(--y),var(--m));fill:#fff;padding:8px;box-sizing:border-box}
 .nav-item.on .navico{border-color:var(--y);box-shadow:0 3px 9px rgba(233,169,59,.45)}
+.nav-divider{height:1px;margin:9px 16px;background:linear-gradient(90deg,transparent,rgba(150,120,60,.28),transparent)}
+.nav-item.special{background:linear-gradient(135deg,#FFF6DC,#D9FBEB);border:1.5px solid var(--y);box-shadow:0 2px 8px rgba(77,212,172,.28)}
+.nav-item.special .navico{background:linear-gradient(135deg,var(--y),var(--m));border-color:#fff}
+.nav-item.special span{font-weight:800;color:var(--ink1)}
+.nav-item.special.on{background:linear-gradient(135deg,var(--y),var(--m))}
+.nav-item.special.on span{color:#fff}
 .mini.star{color:var(--ink3)}
 .mini.star.on{color:var(--y)}
 .mini.star.on svg{fill:var(--y)}
@@ -1343,7 +1349,8 @@ function renderNav(){
   var h = '';
   for(var i=0;i<S.cats.length;i++){
     var c = S.cats[i], n = undoneOf(c);
-    h += '<div class="nav-item'+(c.id === S.cur ? ' on' : '')+'" data-act="cat" data-id="'+c.id+'">'+
+    if(c.special && i>0) h += '<div class="nav-divider"></div>';
+    h += '<div class="nav-item'+(c.id === S.cur ? ' on' : '')+(c.special ? ' special' : '')+'" data-act="cat" data-id="'+c.id+'">'+
       (c.svg ? '<svg class="navico" viewBox="0 0 24 24"><use href="#i-'+c.svg+'"/></svg>' : '<img src="'+IMG[c.img]+'" alt="'+esc(c.name)+'">')+
       '<span>'+esc(c.name)+'</span>'+
       (n ? '<span class="dotn">'+n+'</span>' : '')+
